@@ -3,11 +3,32 @@ import curses
 
 
 def draw(canvas):
-    row, column = (5, 20)
-    canvas.addstr(row, column, 'Hello, World')
-    canvas.border()
-    canvas.refresh()
-    time.sleep(1)
+    while True:
+        row, column = (5, 20)
+
+        canvas.addstr(row, column, '*', curses.A_DIM)
+        canvas.border()
+        time.sleep(1)
+        canvas.refresh()
+        curses.curs_set(False)
+
+        canvas.addstr(row, column, '*')
+        canvas.border()
+        time.sleep(0.3)
+        canvas.refresh()
+        curses.curs_set(False)
+
+        canvas.addstr(row, column, '*', curses.A_BOLD)
+        canvas.border()
+        time.sleep(0.5)
+        canvas.refresh()
+        curses.curs_set(False)
+
+        canvas.addstr(row, column, '*')
+        canvas.border()
+        time.sleep(0.3)
+        canvas.refresh()
+        curses.curs_set(False)
 
 
 if __name__ == '__main__':
