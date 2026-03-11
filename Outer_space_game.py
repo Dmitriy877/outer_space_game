@@ -1,34 +1,36 @@
 import time
 import curses
+import asyncio
 
 
 def draw(canvas):
+    curses.curs_set(False)
+    canvas.border()
+    row, column = (5, 20)
+    coroutine = blink(canvas, row, column)
     while True:
-        row, column = (5, 20)
+        try:
+            time.sleep(0.3)
+            coroutine.send(None)
+            canvas.refresh()
+        except StopAsyncIteration:
+            break
+    time.sleep(3)
 
-        canvas.addstr(row, column, '*', curses.A_DIM)
-        canvas.border()
-        time.sleep(1)
-        canvas.refresh()
-        curses.curs_set(False)
 
-        canvas.addstr(row, column, '*')
-        canvas.border()
-        time.sleep(0.3)
-        canvas.refresh()
-        curses.curs_set(False)
+async def blink(canvas, row, column, symbol='*'):
+    while True:
+        canvas.addstr(row, column, symbol, curses.A_DIM)
+        await asyncio.sleep(0)
 
-        canvas.addstr(row, column, '*', curses.A_BOLD)
-        canvas.border()
-        time.sleep(0.5)
-        canvas.refresh()
-        curses.curs_set(False)
+        canvas.addstr(row, column, symbol)
+        await asyncio.sleep(0)
 
-        canvas.addstr(row, column, '*')
-        canvas.border()
-        time.sleep(0.3)
-        canvas.refresh()
-        curses.curs_set(False)
+        canvas.addstr(row, column, symbol, curses.A_BOLD)
+        await asyncio.sleep(0)
+
+        canvas.addstr(row, column, symbol)
+        await asyncio.sleep(0)
 
 
 if __name__ == '__main__':
