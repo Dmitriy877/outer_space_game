@@ -6,16 +6,24 @@ import asyncio
 def draw(canvas):
     curses.curs_set(False)
     canvas.border()
-    row, column = (5, 20)
-    coroutine = blink(canvas, row, column)
+    coroutines = [
+        blink(canvas, 5, 21),
+        blink(canvas, 5, 22),
+        blink(canvas, 5, 23),
+        blink(canvas, 5, 24),
+        blink(canvas, 5, 25),
+    ]
+
     while True:
-        try:
-            time.sleep(0.3)
-            coroutine.send(None)
-            canvas.refresh()
-        except StopAsyncIteration:
+        for coroutine in coroutines.copy():
+            try:
+                coroutine.send(None)
+                canvas.refresh()
+            except StopIteration:
+                coroutines.remove(coroutine)
+        canvas.refresh()
+        if len(coroutines) == 0:
             break
-    time.sleep(3)
 
 
 async def blink(canvas, row, column, symbol='*'):
