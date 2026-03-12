@@ -9,7 +9,7 @@ STARS_AMOUNT = 100
 
 
 def draw(canvas):
-    curses.curs_set(False)
+    curses.curs_set(0)
     canvas.border()
     coroutines = list()
     max_y, max_x = canvas.getmaxyx()
@@ -37,19 +37,19 @@ def draw(canvas):
 
 async def blink(canvas, row, column, symbol='*'):
     while True:
-        for i in range(20):
+        for i in range(random.randint(1, 50)):
             canvas.addstr(row, column, symbol, curses.A_DIM)
             await asyncio.sleep(0)
 
-        for i in range(3):
+        for i in range(random.randint(1, 50)):
             canvas.addstr(row, column, symbol)
             await asyncio.sleep(0)
 
-        for i in range(5):
+        for i in range(random.randint(1, 50)):
             canvas.addstr(row, column, symbol, curses.A_BOLD)
             await asyncio.sleep(0)
 
-        for i in range(3):
+        for i in range(random.randint(1, 50)):
             canvas.addstr(row, column, symbol)
             await asyncio.sleep(0)
 
