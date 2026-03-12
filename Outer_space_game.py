@@ -14,6 +14,9 @@ def draw(canvas):
     coroutines = list()
     max_y, max_x = canvas.getmaxyx()
 
+    fire_coroutine = fire(canvas, max_y//2, max_x//2)
+    coroutines.append(fire_coroutine)
+
     for i in range(STARS_AMOUNT):
         row = random.randint(2, max_y - 2)
         column = random.randint(2, max_x - 2)
@@ -33,6 +36,36 @@ def draw(canvas):
 
         if len(coroutines) == 0:
             break
+
+
+async def fire(canvas, start_row, start_column, rows_speed=-0.3, columns_speed=0):
+    """Display animation of gun shot, direction and speed can be specified."""
+
+    row, column = start_row, start_column
+
+    canvas.addstr(round(row), round(column), '*')
+    await asyncio.sleep(0)
+
+    canvas.addstr(round(row), round(column), 'O')
+    await asyncio.sleep(0)
+    canvas.addstr(round(row), round(column), ' ')
+
+    row += rows_speed
+    column += columns_speed
+
+    symbol = '-' if columns_speed else '|'
+
+    rows, columns = canvas.getmaxyx()
+    max_row, max_column = rows - 1, columns - 1
+
+    curses.beep()
+
+    while 0 < row < max_row and 0 < column < max_column:
+        canvas.addstr(round(row), round(column), symbol)
+        await asyncio.sleep(0)
+        canvas.addstr(round(row), round(column), ' ')
+        row += rows_speed
+        column += columns_speed
 
 
 async def blink(canvas, row, column, symbol='*'):
