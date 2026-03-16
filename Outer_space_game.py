@@ -1,7 +1,11 @@
 import time
 import curses
-import asyncio
 import random
+
+from animations.fire import fire
+from animations.animate_spaceship import animate_spaceship
+from animations.blink import blink
+
 
 TIC_TIMEOUT = 0.1
 SYMBOLS = ['+', '*', '.', ':']
@@ -9,6 +13,11 @@ STARS_AMOUNT = 100
 
 
 def draw(canvas):
+    with open('animations/rocket_frame_1.txt', 'r') as animation_file:
+        rocket_frame_1 = animation_file.read()
+    with open('animations/rocket_frame_2.txt', 'r') as animation_file:
+        rocket_frame_2 = animation_file.read()
+
     curses.curs_set(0)
     canvas.border()
     coroutines = list()
@@ -16,6 +25,7 @@ def draw(canvas):
 
     fire_coroutine = fire(canvas, max_y//2, max_x//2)
     coroutines.append(fire_coroutine)
+    coroutines.append(animate_spaceship(canvas, max_y//2, max_x//2, rocket_frame_1, rocket_frame_2))
 
     for i in range(STARS_AMOUNT):
         row = random.randint(2, max_y - 2)
@@ -36,55 +46,6 @@ def draw(canvas):
 
         if len(coroutines) == 0:
             break
-
-
-async def fire(canvas, start_row, start_column, rows_speed=-0.3, columns_speed=0):
-    """Display animation of gun shot, direction and speed can be specified."""
-
-    row, column = start_row, start_column
-
-    canvas.addstr(round(row), round(column), '*')
-    await asyncio.sleep(0)
-
-    canvas.addstr(round(row), round(column), 'O')
-    await asyncio.sleep(0)
-    canvas.addstr(round(row), round(column), ' ')
-
-    row += rows_speed
-    column += columns_speed
-
-    symbol = '-' if columns_speed else '|'
-
-    rows, columns = canvas.getmaxyx()
-    max_row, max_column = rows - 1, columns - 1
-
-    curses.beep()
-
-    while 0 < row < max_row and 0 < column < max_column:
-        canvas.addstr(round(row), round(column), symbol)
-        await asyncio.sleep(0)
-        canvas.addstr(round(row), round(column), ' ')
-        row += rows_speed
-        column += columns_speed
-
-
-async def blink(canvas, row, column, symbol='*'):
-    while True:
-        for i in range(random.randint(1, 50)):
-            canvas.addstr(row, column, symbol, curses.A_DIM)
-            await asyncio.sleep(0)
-
-        for i in range(random.randint(1, 50)):
-            canvas.addstr(row, column, symbol)
-            await asyncio.sleep(0)
-
-        for i in range(random.randint(1, 50)):
-            canvas.addstr(row, column, symbol, curses.A_BOLD)
-            await asyncio.sleep(0)
-
-        for i in range(random.randint(1, 50)):
-            canvas.addstr(row, column, symbol)
-            await asyncio.sleep(0)
 
 
 if __name__ == '__main__':
