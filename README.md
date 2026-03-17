@@ -59,7 +59,7 @@ python outer_space_game.py
 или 
 
 ```python
-python3 checker_bot.py
+python3 outer_space_game.py
 ```
 
 * Игра начнет свою работу
