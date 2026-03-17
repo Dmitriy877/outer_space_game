@@ -2,9 +2,9 @@ import time
 import curses
 import random
 
-from animations.fire import fire
-from animations.animate_spaceship import animate_spaceship
-from animations.blink import blink
+from scripts.fire import fire
+from scripts.animate_spaceship import animate_spaceship
+from scripts.blink import blink
 
 
 TIC_TIMEOUT = 0.1
