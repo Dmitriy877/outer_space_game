@@ -13,12 +13,13 @@ STARS_AMOUNT = 100
 
 
 def draw(canvas):
-    with open('animations/rocket_frame_1.txt', 'r') as animation_file:
+    with open('frames/rocket_frame_1.txt', 'r') as animation_file:
         rocket_frame_1 = animation_file.read()
-    with open('animations/rocket_frame_2.txt', 'r') as animation_file:
+    with open('frames/rocket_frame_2.txt', 'r') as animation_file:
         rocket_frame_2 = animation_file.read()
 
     curses.curs_set(0)
+    canvas.nodelay(True)
     canvas.border()
     coroutines = list()
     max_y, max_x = canvas.getmaxyx()
