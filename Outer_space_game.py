@@ -29,10 +29,11 @@ def draw(canvas):
     coroutines.append(animate_spaceship(canvas, max_y//2, max_x//2, rocket_frame_1, rocket_frame_2))
 
     for i in range(STARS_AMOUNT):
+        offset_tics = random.randint(1, 50)
         row = random.randint(2, max_y - 2)
         column = random.randint(2, max_x - 2)
         symbol = random.choice(SYMBOLS)
-        coroutines.append(blink(canvas, row, column, symbol))
+        coroutines.append(blink(canvas, row, column, symbol, offset_tics))
 
     while True:
         for coroutine in coroutines.copy():
