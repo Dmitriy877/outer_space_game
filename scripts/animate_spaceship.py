@@ -13,7 +13,7 @@ async def animate_spaceship(
 ):
 
     max_rows, max_columns = canvas.getmaxyx()
-    frames = [animation_1, animation_2]
+    frames = [animation_1, animation_1, animation_2, animation_2]
     frame_cycler = itertools.cycle(frames)
 
     ship_height, ship_width = get_frame_size(animation_1)
@@ -37,6 +37,7 @@ async def animate_spaceship(
             start_column = max_columns - ship_width - 1
 
         current_frame = next(frame_cycler)
+
         draw_frame(canvas, start_row, start_column, current_frame)
         await asyncio.sleep(0)
         draw_frame(canvas, start_row, start_column, current_frame, negative=True)
