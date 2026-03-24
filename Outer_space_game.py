@@ -5,12 +5,13 @@ import random
 from scripts.fire import fire
 from scripts.animate_spaceship import animate_spaceship
 from scripts.blink import blink
+from scripts.fill_orbit_with_garbage import fill_orbit_with_garbage
 
 
 TIC_TIMEOUT = 0.1
 SYMBOLS = ['+', '*', '.', ':']
 STARS_AMOUNT = 100
-
+coroutines = list()
 
 def draw(canvas):
     with open('frames/rocket_frame_1.txt', 'r') as animation_file:
@@ -21,12 +22,12 @@ def draw(canvas):
     curses.curs_set(0)
     canvas.nodelay(True)
     canvas.border()
-    coroutines = list()
     max_y, max_x = canvas.getmaxyx()
 
     fire_coroutine = fire(canvas, max_y//2, max_x//2)
     coroutines.append(fire_coroutine)
     coroutines.append(animate_spaceship(canvas, max_y//2, max_x//2, rocket_frame_1, rocket_frame_2))
+    coroutines.append(fill_orbit_with_garbage(canvas, coroutines))
 
     for i in range(STARS_AMOUNT):
         offset_tics = random.randint(1, 50)
