@@ -2,6 +2,7 @@ import random
 import asyncio
 
 from .space_garbage import fly_garbage
+from .sleep import sleep
 
 
 async def fill_orbit_with_garbage(canvas, coroutines):
@@ -25,5 +26,4 @@ async def fill_orbit_with_garbage(canvas, coroutines):
         garbage_name = random.choice(garbage_frames)
         garbage_frame = garbage_animations[garbage_name]
         coroutines.append(fly_garbage(canvas, random.randint(1, max_x - 1), garbage_frame))
-        for i in range(10):
-            await asyncio.sleep(0)
+        await sleep(10)
