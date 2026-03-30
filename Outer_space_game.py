@@ -13,6 +13,7 @@ SYMBOLS = ['+', '*', '.', ':']
 STARS_AMOUNT = 100
 coroutines = list()
 
+
 def draw(canvas):
     with open('frames/rocket_frame_1.txt', 'r') as animation_file:
         rocket_frame_1 = animation_file.read()
@@ -24,9 +25,9 @@ def draw(canvas):
     canvas.border()
     max_y, max_x = canvas.getmaxyx()
 
-    fire_coroutine = fire(canvas, max_y//2, max_x//2)
+    fire_coroutine = fire(canvas, max_y//2, max_x//2+2)
     coroutines.append(fire_coroutine)
-    coroutines.append(animate_spaceship(canvas, max_y//2, max_x//2, rocket_frame_1, rocket_frame_2))
+    coroutines.append(animate_spaceship(canvas, max_y//2, max_x//2, rocket_frame_1, rocket_frame_2, coroutines))
     coroutines.append(fill_orbit_with_garbage(canvas, coroutines))
 
     for i in range(STARS_AMOUNT):

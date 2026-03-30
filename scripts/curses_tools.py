@@ -51,10 +51,8 @@ def draw_frame(canvas, start_row, start_column, text, negative=False):
                 continue
             if column >= columns_number:
                 break
-
             if symbol == ' ':
                 continue
-
             if row == rows_number - 1 and column == columns_number - 1:
                 continue
 

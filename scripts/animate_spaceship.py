@@ -2,6 +2,7 @@ import itertools
 import asyncio
 
 from .curses_tools import draw_frame, read_controls, get_frame_size
+from .fire import fire
 
 
 async def animate_spaceship(
@@ -9,7 +10,8 @@ async def animate_spaceship(
                             start_row,
                             start_column,
                             animation_1,
-                            animation_2
+                            animation_2,
+                            coroutines
 ):
 
     max_rows, max_columns = canvas.getmaxyx()
@@ -37,6 +39,9 @@ async def animate_spaceship(
             start_column = max_columns - ship_width - 1
 
         current_frame = next(frame_cycler)
+
+        if space_pressed:
+            coroutines.append(fire(canvas, start_row, start_column+2))
 
         draw_frame(canvas, start_row, start_column, current_frame)
         await asyncio.sleep(0)
