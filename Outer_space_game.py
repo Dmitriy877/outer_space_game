@@ -14,6 +14,7 @@ SYMBOLS = ['+', '*', '.', ':']
 STARS_AMOUNT = 100
 coroutines = list()
 obstacles = list()
+obstacles_in_last_collision = list()
 
 
 def draw(canvas):
@@ -27,7 +28,7 @@ def draw(canvas):
     canvas.border()
     max_y, max_x = canvas.getmaxyx()
 
-    fire_coroutine = fire(canvas, max_y//2, max_x//2+2, obstacles)
+    fire_coroutine = fire(canvas, max_y//2, max_x//2+2, obstacles, obstacles_in_last_collision)
     coroutines.append(fire_coroutine)
     coroutines.append(animate_spaceship(
         canvas,
@@ -36,9 +37,10 @@ def draw(canvas):
         rocket_frame_1,
         rocket_frame_2,
         coroutines,
-        obstacles
+        obstacles,
+        obstacles_in_last_collision
     ))
-    coroutines.append(fill_orbit_with_garbage(canvas, coroutines, obstacles))
+    coroutines.append(fill_orbit_with_garbage(canvas, coroutines, obstacles, obstacles_in_last_collision))
     coroutines.append(show_obstacles(canvas, obstacles))
 
     for i in range(STARS_AMOUNT):

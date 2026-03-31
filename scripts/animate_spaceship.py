@@ -12,7 +12,8 @@ async def animate_spaceship(
                             animation_1,
                             animation_2,
                             coroutines,
-                            obstacles
+                            obstacles,
+                            obstacles_in_last_collision
 ):
 
     max_rows, max_columns = canvas.getmaxyx()
@@ -42,7 +43,7 @@ async def animate_spaceship(
         current_frame = next(frame_cycler)
 
         if space_pressed:
-            coroutines.append(fire(canvas, start_row, start_column+2, obstacles))
+            coroutines.append(fire(canvas, start_row, start_column+2, obstacles, obstacles_in_last_collision))
 
         draw_frame(canvas, start_row, start_column, current_frame)
         await asyncio.sleep(0)
