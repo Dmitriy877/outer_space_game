@@ -6,12 +6,14 @@ from scripts.fire import fire
 from scripts.animate_spaceship import animate_spaceship
 from scripts.blink import blink
 from scripts.fill_orbit_with_garbage import fill_orbit_with_garbage
+from scripts.obstacles import show_obstacles
 
 
 TIC_TIMEOUT = 0.1
 SYMBOLS = ['+', '*', '.', ':']
 STARS_AMOUNT = 100
 coroutines = list()
+obstacles = list()
 
 
 def draw(canvas):
@@ -28,7 +30,8 @@ def draw(canvas):
     fire_coroutine = fire(canvas, max_y//2, max_x//2+2)
     coroutines.append(fire_coroutine)
     coroutines.append(animate_spaceship(canvas, max_y//2, max_x//2, rocket_frame_1, rocket_frame_2, coroutines))
-    coroutines.append(fill_orbit_with_garbage(canvas, coroutines))
+    coroutines.append(fill_orbit_with_garbage(canvas, coroutines, obstacles))
+    coroutines.append(show_obstacles(canvas, obstacles))
 
     for i in range(STARS_AMOUNT):
         offset_tics = random.randint(1, 50)
