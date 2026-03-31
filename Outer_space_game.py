@@ -27,9 +27,17 @@ def draw(canvas):
     canvas.border()
     max_y, max_x = canvas.getmaxyx()
 
-    fire_coroutine = fire(canvas, max_y//2, max_x//2+2)
+    fire_coroutine = fire(canvas, max_y//2, max_x//2+2, obstacles)
     coroutines.append(fire_coroutine)
-    coroutines.append(animate_spaceship(canvas, max_y//2, max_x//2, rocket_frame_1, rocket_frame_2, coroutines))
+    coroutines.append(animate_spaceship(
+        canvas,
+        max_y//2,
+        max_x//2,
+        rocket_frame_1,
+        rocket_frame_2,
+        coroutines,
+        obstacles
+    ))
     coroutines.append(fill_orbit_with_garbage(canvas, coroutines, obstacles))
     coroutines.append(show_obstacles(canvas, obstacles))
 
