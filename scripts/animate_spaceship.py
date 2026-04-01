@@ -3,6 +3,7 @@ import asyncio
 
 from .curses_tools import draw_frame, read_controls, get_frame_size
 from .fire import fire
+from .show_gameover import show_gameover
 
 
 async def animate_spaceship(
@@ -23,6 +24,12 @@ async def animate_spaceship(
     ship_height, ship_width = get_frame_size(animation_1)
 
     while True:
+
+        for obstacle in obstacles:
+            if obstacle.has_collision(start_row, start_column, ship_width, ship_height):
+                coroutines.append(show_gameover(canvas))
+                return
+
         rows_direction, columns_direction, space_pressed = read_controls(canvas)
 
         start_row += rows_direction

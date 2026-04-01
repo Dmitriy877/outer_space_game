@@ -3,7 +3,7 @@ import asyncio
 
 from .obstacles import Obstacle
 from .curses_tools import get_frame_size
-from .explosion import EXPLOSION_FRAMES, explode
+from .explosion import explode
 
 
 async def fly_garbage(canvas, column, garbage_frame, obstacles, obstacles_in_last_collision, coroutines, speed=0.5,):
