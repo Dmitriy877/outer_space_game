@@ -25,5 +25,5 @@ async def fill_orbit_with_garbage(canvas, coroutines, obstacles, obstacles_in_la
     while True:
         garbage_name = random.choice(garbage_frames)
         garbage_frame = garbage_animations[garbage_name]
-        coroutines.append(fly_garbage(canvas, random.randint(1, max_x - 1), garbage_frame, obstacles, obstacles_in_last_collision))
+        coroutines.append(fly_garbage(canvas, random.randint(1, max_x - 1), garbage_frame, obstacles, obstacles_in_last_collision, coroutines))
         await sleep(10)

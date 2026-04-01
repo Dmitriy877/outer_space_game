@@ -7,6 +7,7 @@ from scripts.animate_spaceship import animate_spaceship
 from scripts.blink import blink
 from scripts.fill_orbit_with_garbage import fill_orbit_with_garbage
 from scripts.obstacles import show_obstacles
+from scripts.explosion import EXPLOSION_FRAMES, explode
 
 
 TIC_TIMEOUT = 0.1
