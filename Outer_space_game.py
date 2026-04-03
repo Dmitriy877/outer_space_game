@@ -7,11 +7,13 @@ from scripts.animate_spaceship import animate_spaceship
 from scripts.blink import blink
 from scripts.fill_orbit_with_garbage import fill_orbit_with_garbage
 from scripts.obstacles import show_obstacles
+from scripts.years_counter import years_counter
 
 
 TIC_TIMEOUT = 0.1
 SYMBOLS = ['+', '*', '.', ':']
 STARS_AMOUNT = 100
+year = [1957]
 coroutines = list()
 obstacles = list()
 obstacles_in_last_collision = list()
@@ -28,6 +30,8 @@ def draw(canvas):
     canvas.border()
     max_y, max_x = canvas.getmaxyx()
 
+    years_frame = canvas.derwin(3, max_x - 2, max_y - 4, 1)
+
     fire_coroutine = fire(canvas, max_y//2, max_x//2+2, obstacles, obstacles_in_last_collision)
     coroutines.append(fire_coroutine)
     coroutines.append(animate_spaceship(
@@ -38,10 +42,12 @@ def draw(canvas):
         rocket_frame_2,
         coroutines,
         obstacles,
-        obstacles_in_last_collision
+        obstacles_in_last_collision,
+        year
     ))
-    coroutines.append(fill_orbit_with_garbage(canvas, coroutines, obstacles, obstacles_in_last_collision))
+    coroutines.append(fill_orbit_with_garbage(canvas, coroutines, obstacles, obstacles_in_last_collision, year))
     coroutines.append(show_obstacles(canvas, obstacles))
+    coroutines.append(years_counter(year))
 
     for i in range(STARS_AMOUNT):
         offset_tics = random.randint(1, 50)
@@ -56,12 +62,15 @@ def draw(canvas):
                 coroutine.send(None)
             except StopIteration:
                 coroutines.remove(coroutine)
+        years_frame.addstr(1, 1, f"year:{year}")
         canvas.refresh()
+        years_frame.refresh()
 
         time.sleep(TIC_TIMEOUT)
 
         if len(coroutines) == 0:
             break
+    years_frame.delwin()
 
 
 if __name__ == '__main__':

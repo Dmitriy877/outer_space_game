@@ -4,6 +4,18 @@ import asyncio
 from .curses_tools import draw_frame, read_controls, get_frame_size
 from .fire import fire
 from .show_gameover import show_gameover
+from .show_message import show_message
+
+PHRASES = {
+    1957: "First Sputnik",
+    1961: "Gagarin flew!",
+    1969: "Armstrong got on the moon!",
+    1971: "First orbital space station Salute-1",
+    1981: "Flight of the Shuttle Columbia",
+    1998: 'ISS start building',
+    2011: 'Messenger launch to Mercury',
+    2020: "Take the plasma gun! Shoot the garbage!",
+}
 
 
 async def animate_spaceship(
@@ -14,7 +26,8 @@ async def animate_spaceship(
                             animation_2,
                             coroutines,
                             obstacles,
-                            obstacles_in_last_collision
+                            obstacles_in_last_collision,
+                            year
 ):
 
     max_rows, max_columns = canvas.getmaxyx()
@@ -22,6 +35,8 @@ async def animate_spaceship(
     frame_cycler = itertools.cycle(frames)
 
     ship_height, ship_width = get_frame_size(animation_1)
+
+    shown_messages = set()
 
     while True:
 
@@ -49,8 +64,13 @@ async def animate_spaceship(
 
         current_frame = next(frame_cycler)
 
-        if space_pressed:
-            coroutines.append(fire(canvas, start_row, start_column+2, obstacles, obstacles_in_last_collision))
+        if year[0] in PHRASES.keys() and year[0] not in shown_messages:
+            shown_messages.add(year[0])
+            coroutines.append(show_message(canvas, f"{year[0]:} {PHRASES[year[0]]}"))
+
+        if year[0] >= 2020:
+            if space_pressed:
+                coroutines.append(fire(canvas, start_row, start_column+2, obstacles, obstacles_in_last_collision))
 
         draw_frame(canvas, start_row, start_column, current_frame)
         await asyncio.sleep(0)
