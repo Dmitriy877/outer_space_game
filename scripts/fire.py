@@ -2,7 +2,13 @@ import curses
 import asyncio
 
 
-async def fire(canvas, start_row, start_column, obstacles, obstacles_in_last_collision, rows_speed=-0.3, columns_speed=0):
+async def fire(canvas,
+               start_row: int,
+               start_column: int,
+               obstacles: int,
+               obstacles_in_last_collision: int,
+               rows_speed=-0.3,
+               columns_speed=0) -> None:
     """Display animation of gun shot, direction and speed can be specified."""
 
     row, column = start_row, start_column

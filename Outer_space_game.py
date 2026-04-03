@@ -19,7 +19,7 @@ obstacles = list()
 obstacles_in_last_collision = list()
 
 
-def draw(canvas):
+def draw(canvas) -> None:
     with open('frames/rocket_frame_1.txt', 'r') as animation_file:
         rocket_frame_1 = animation_file.read()
     with open('frames/rocket_frame_2.txt', 'r') as animation_file:

@@ -3,7 +3,11 @@ import curses
 from .sleep import sleep
 
 
-async def blink(canvas, row, column, symbol='*', offset_tics=0):
+async def blink(canvas, row: int,
+                column: int,
+                symbol='*',
+                offset_tics=0
+                ) -> None:
     await sleep(offset_tics)
 
     while True:

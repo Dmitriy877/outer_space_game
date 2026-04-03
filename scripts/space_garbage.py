@@ -6,7 +6,14 @@ from .curses_tools import get_frame_size
 from .explosion import explode
 
 
-async def fly_garbage(canvas, column, garbage_frame, obstacles, obstacles_in_last_collision, coroutines, speed=0.5,):
+async def fly_garbage(canvas,
+                      column: int,
+                      garbage_frame: str,
+                      obstacles: list,
+                      obstacles_in_last_collision: list,
+                      coroutines: list,
+                      speed=0.5,
+                      ) -> None:
     """Animate garbage, flying from top to bottom. Сolumn position will stay same, as specified on start."""
     rows_number, columns_number = canvas.getmaxyx()
 

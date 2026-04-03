@@ -1,11 +1,16 @@
 import random
 import asyncio
+from typing import Union
 
 from .space_garbage import fly_garbage
 from .sleep import sleep
 
 
-async def fill_orbit_with_garbage(canvas, coroutines, obstacles, obstacles_in_last_collision, year):
+async def fill_orbit_with_garbage(canvas,
+                                  coroutines: list,
+                                  obstacles: list,
+                                  obstacles_in_last_collision: list,
+                                  year: list) -> None:
     garbage_frames = [
         'duck',
         'hubble',
@@ -33,7 +38,7 @@ async def fill_orbit_with_garbage(canvas, coroutines, obstacles, obstacles_in_la
             await sleep(garbage_period)
 
 
-def get_garbage_delay_tics(year):
+def get_garbage_delay_tics(year: list) -> Union[int, bool]:
     if year[0] < 1961:
         return None
     elif year[0] < 1969:
@@ -48,7 +53,3 @@ def get_garbage_delay_tics(year):
         return 6
     else:
         return 2
-
-
-
-

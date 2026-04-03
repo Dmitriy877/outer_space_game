@@ -20,15 +20,15 @@ PHRASES = {
 
 async def animate_spaceship(
                             canvas,
-                            start_row,
-                            start_column,
-                            animation_1,
-                            animation_2,
-                            coroutines,
-                            obstacles,
-                            obstacles_in_last_collision,
-                            year
-):
+                            start_row: int,
+                            start_column: int,
+                            animation_1: str,
+                            animation_2: str,
+                            coroutines: list,
+                            obstacles: list,
+                            obstacles_in_last_collision: list,
+                            year: list
+) -> None:
 
     max_rows, max_columns = canvas.getmaxyx()
     frames = [animation_1, animation_1, animation_2, animation_2]

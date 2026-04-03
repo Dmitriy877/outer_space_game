@@ -4,7 +4,7 @@ from .curses_tools import draw_frame
 from .sleep import sleep
 
 
-async def show_message(canvas, phrase):
+async def show_message(canvas, phrase: str) -> None:
     max_y, max_x = canvas.getmaxyx()
     curses.beep()
 

@@ -14,7 +14,7 @@ GAME_OVER_FRAME = [
     """]
 
 
-async def show_gameover(canvas):
+async def show_gameover(canvas) -> None:
     max_y, max_x = canvas.getmaxyx()
 
     curses.beep()
