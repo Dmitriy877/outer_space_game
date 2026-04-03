@@ -2,7 +2,6 @@ import time
 import curses
 import random
 
-from scripts.fire import fire
 from scripts.animate_spaceship import animate_spaceship
 from scripts.blink import blink
 from scripts.fill_orbit_with_garbage import fill_orbit_with_garbage
@@ -32,8 +31,6 @@ def draw(canvas) -> None:
 
     years_frame = canvas.derwin(3, max_x - 2, max_y - 4, 1)
 
-    fire_coroutine = fire(canvas, max_y//2, max_x//2+2, obstacles, obstacles_in_last_collision)
-    coroutines.append(fire_coroutine)
     coroutines.append(animate_spaceship(
         canvas,
         max_y//2,
@@ -46,7 +43,6 @@ def draw(canvas) -> None:
         year
     ))
     coroutines.append(fill_orbit_with_garbage(canvas, coroutines, obstacles, obstacles_in_last_collision, year))
-    coroutines.append(show_obstacles(canvas, obstacles))
     coroutines.append(years_counter(year))
 
     for i in range(STARS_AMOUNT):
