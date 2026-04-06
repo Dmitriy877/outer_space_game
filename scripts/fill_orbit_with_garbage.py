@@ -1,6 +1,7 @@
 import random
 import asyncio
 from typing import Union
+import os
 
 from .space_garbage import fly_garbage
 from .sleep import sleep
@@ -11,18 +12,11 @@ async def fill_orbit_with_garbage(canvas,
                                   obstacles: list,
                                   obstacles_in_last_collision: list,
                                   year: list) -> None:
-    garbage_frames = [
-        'duck',
-        'hubble',
-        'lamp',
-        'trash_large',
-        'trash_x1',
-        'trash_small'
-    ]
+    garbage_frames = os.listdir('./frames/garbage_frames')
 
     garbage_animations = dict()
     for garbage_frame in garbage_frames:
-        with open(f'frames/{garbage_frame}.txt', 'r') as garbage_animation:
+        with open(f'frames/garbage_frames/{garbage_frame}', 'r') as garbage_animation:
             garbage_animations[garbage_frame] = garbage_animation.read()
 
     max_y, max_x = canvas.getmaxyx()
